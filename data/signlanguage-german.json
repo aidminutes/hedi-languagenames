@@ -1,5 +1,9 @@
 {
-  "name": "Sign Language",
+  "english": "German Sign Language",
+  "wikipedia": "https://en.wikipedia.org/wiki/German_Sign_Language",
+  "langcode-1": "sgn-de",
+  "langcode-2": "gsg",
+  "langcode-3": "dsg",
 	"translated-names": [
 		{ "langcode": "af", "translation": "Gebare taal" },
 		{ "langcode": "sq", "translation": "Gjuha e shenjave" },
