@@ -15,7 +15,7 @@ async function run() {
 		}
 		if ('generateFieldConfig' in input) {
 			console.log(':: running generateFieldConfig')
-			await generateFieldConfig(dataDir, exportDir);
+			await generateFieldConfig(dataDir, exportDir, input.generateFieldConfig);
 		}
 
 	} else {
@@ -23,7 +23,7 @@ async function run() {
 ---
 run with options:
 - "--compactData" optional whitespace separated locales to include labels for
-- "generateFieldConfig"
+- "--generateFieldConfig" optional whitespace separated locales generate ymls for
 `);
 	}
 }

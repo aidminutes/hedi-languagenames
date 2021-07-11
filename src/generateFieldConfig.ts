@@ -3,7 +3,7 @@ import * as path from "https://deno.land/std/path/mod.ts";
 
 const utf8 = new TextDecoder('utf-8');
 
-export async function generateFieldConfig(dataDir: string, exportDir: string) {
+export async function generateFieldConfig(dataDir: string, exportDir: string, locales = [] as string[]) {
 	const exportFolder = path.join(exportDir, 'config','install');
 	if (!existsSync(exportFolder))
 		Deno.mkdirSync(exportFolder, {recursive : true});
@@ -12,10 +12,13 @@ export async function generateFieldConfig(dataDir: string, exportDir: string) {
 		if (dirEntry.isFile && path.extname(dirEntry.name) === ".json") {
 			const raw = await Deno.readFile(path.join(dataDir, dirEntry.name));
 			const text = utf8.decode(raw);
-			const code = JSON.parse(text)['langcode-1'].replace('-','').toLowerCase();
+			const locale = JSON.parse(text)['langcode-1'];
+			if (locales.length === 0 || locales.includes(locale)) {
+				const code = locale.replace('-','').toLowerCase();
 
-			generateStorageYml(code, exportFolder);
-			generateFieldYml(code, exportFolder);
+				generateStorageYml(code, exportFolder);
+				generateFieldYml(code, exportFolder);
+			}
 		}
 	}
 }
