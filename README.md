@@ -6,4 +6,4 @@ With the translations I created a matrix in [a google table](https://docs.google
 ## Usage
 
 * install deno if not present
-* cmd: 'deno run --unsafe --allow-read main.ts [option]'
+* cmd: 'deno run --unsafe --allow-read main.ts --[option [...args]]'

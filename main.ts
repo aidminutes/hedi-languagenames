@@ -7,13 +7,13 @@ const exportDir = "export";
 run();
 
 async function run() {
-	const args:string[] = Deno.args;
-	if (args?.length !== 0) {
-		if (args.includes('compactData')) {
+	const input = readArgs();
+	if (Object.keys(input).length > 0) {
+		if ('compactData' in input) {
 			console.log(':: running compactData')
 			await compactData(dataDir, exportDir);
 		}
-		if (args.includes('generateFieldConfig')) {
+		if ('generateFieldConfig' in input) {
 			console.log(':: running generateFieldConfig')
 			await generateFieldConfig(dataDir, exportDir);
 		}
@@ -26,4 +26,18 @@ run with options:
 - "generateFieldConfig"
 `);
 	}
+}
+
+function readArgs(): Record<string,string[]> {
+	let curCmd = "";
+	const input: Record<string,string[]> = {};
+	for (const arg of Deno.args) {
+		if (arg.startsWith('--')) {
+			curCmd = arg.slice(2);
+			input[curCmd] = [];
+		} else if (curCmd) {
+			input[curCmd].push(arg);
+		}
+	}
+	return input;
 }
