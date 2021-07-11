@@ -35,17 +35,19 @@ export async function compactData(dataDir: string, exportDir: string, locales = 
 				return acc; 
 			}, 
 			{} as Record<string,string>);
+			const codes = [
+				languageFile['langcode-1'],
+				languageFile['langcode-2'],
+				languageFile['langcode-3'],
+			];
 			const result = {
+				code: codes[0],
 				direction: languageFile.direction,
-				langcodes: [
-					languageFile['langcode-1'],
-					languageFile['langcode-2'],
-					languageFile['langcode-3'],
-				],
-				labels
+				codes,
+				labels,
 			};
 			
-			const exportFile = path.join(exportFolder,result.langcodes[0]+".json");
+			const exportFile = path.join(exportFolder,result.code+".json");
 			const write = await Deno.writeTextFile(exportFile, JSON.stringify(result,null,2));
 			console.log('---> '+exportFile);
 			counter++;
