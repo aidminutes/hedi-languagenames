@@ -11,7 +11,7 @@ async function run() {
 	if (Object.keys(input).length > 0) {
 		if ('compactData' in input) {
 			console.log(':: running compactData')
-			await compactData(dataDir, exportDir);
+			await compactData(dataDir, exportDir, input.compactData);
 		}
 		if ('generateFieldConfig' in input) {
 			console.log(':: running generateFieldConfig')
@@ -22,7 +22,7 @@ async function run() {
 		console.log(`Language Data Converter
 ---
 run with options:
-- "compactData"
+- "--compactData" optional whitespace separated locales to include labels for
 - "generateFieldConfig"
 `);
 	}

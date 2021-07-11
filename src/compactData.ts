@@ -17,18 +17,24 @@ interface ILanguageFile {
 	}]
 }
 
-export async function compactData(dataDir: string, exportDir: string) {
+export async function compactData(dataDir: string, exportDir: string, locales = [] as string[]) {
 	const exportFolder = path.join(exportDir, 'artifacts');
 	if (!existsSync(exportFolder))
 		Deno.mkdirSync(exportFolder, {recursive : true});
 
+	let counter = 0;
 	for await (const dirEntry of Deno.readDir(dataDir)) {
 		if (dirEntry.isFile && path.extname(dirEntry.name) === ".json") {
 			const raw = await Deno.readFile(path.join(dataDir, dirEntry.name));
 			const text = utf8.decode(raw);
 			const languageFile = JSON.parse(text) as ILanguageFile;
-
-			const labels = languageFile['translated-names'].reduce((acc, val) => { acc[val.langcode] = val.translation; return acc; }, {} as Record<string,string>);
+			const labels = languageFile['translated-names'].reduce((acc, val) => { 
+				if (locales.length === 0 || locales.includes(val.langcode)) {
+					acc[val.langcode] = val.translation; 
+				}
+				return acc; 
+			}, 
+			{} as Record<string,string>);
 			const result = {
 				direction: languageFile.direction,
 				langcodes: [
@@ -42,7 +48,8 @@ export async function compactData(dataDir: string, exportDir: string) {
 			const exportFile = path.join(exportFolder,result.langcodes[0]+".json");
 			const write = await Deno.writeTextFile(exportFile, JSON.stringify(result,null,2));
 			console.log('---> '+exportFile);
+			counter++;
 		}
 	}
-	console.log("data exports written");
+	console.log(counter+" data exports written");
 }
