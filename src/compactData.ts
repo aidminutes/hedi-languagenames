@@ -1,21 +1,9 @@
 import { existsSync } from "https://deno.land/std/fs/mod.ts";
 import * as path from "https://deno.land/std/path/mod.ts";
 
-const utf8 = new TextDecoder('utf-8');
+import { ILanguageFile } from "./ILanguageFile.ts";
 
-interface ILanguageFile {
-	native?: string;
-	english: string;
-	wikipedia?: string;
-	direction: "ltr" | "rtl";
-	"langcode-1": string;
-	"langcode-2": string;
-	"langcode-3": string;
-	"translated-names": [{
-		langcode: string;
-		translation: string;
-	}]
-}
+const utf8 = new TextDecoder('utf-8');
 
 export async function compactData(dataDir: string, exportDir: string, locales = [] as string[]) {
 	const exportFolder = path.join(exportDir, 'artifacts');

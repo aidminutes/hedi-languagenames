@@ -1,3 +1,4 @@
+import { capitalizeTranslations } from "./src/capitalize.ts";
 import { compactData } from "./src/compactData.ts";
 import { generateFieldConfig } from "./src/generateFieldConfig.ts";
 
@@ -9,6 +10,10 @@ run();
 async function run() {
 	const input = readArgs();
 	if (Object.keys(input).length > 0) {
+		if ('capitalize' in input) {
+			console.log(':: running capitalize')
+			await capitalizeTranslations(dataDir, input.compactData);
+		}
 		if ('compactData' in input) {
 			console.log(':: running compactData')
 			await compactData(dataDir, exportDir, input.compactData);
