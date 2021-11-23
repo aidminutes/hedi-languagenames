@@ -24,7 +24,7 @@ export async function generateFieldConfig(dataDir: string, exportDir: string, lo
 }
 
 function generateStorageYml(code: string, exportFolder: string) {
-	const config = `langcode: en
+	const config = `langcode: de
 status: true
 dependencies:
   module:
@@ -35,16 +35,19 @@ entity_type: hedi_language
 type: string
 settings:
   max_length: 255
+	is_ascii: false
+  case_sensitive: true
 module: core
 cardinality: 1
 translatable: true
-indexes: {  }`;
+indexes: {  }
+`;
 	const filename = `field.storage.hedi_language.field_${code}.yml`;
 	Deno.writeTextFile(path.join(exportFolder,filename), config).then(() => console.log('generated '+filename));
 }
 
 function generateFieldYml(code: string, exportFolder: string) {
-	const config = `langcode: en
+	const config = `langcode: de
 status: true
 dependencies:
   config:
@@ -59,7 +62,8 @@ label: ${code}
 field_type: string
 default_value: {  }
 default_value_callback: ''
-settings: {  }`;
+settings: {  }
+`;
 	const filename = `field.field.hedi_language.hedi_language.field_${code}.yml`;
 	Deno.writeTextFile(path.join(exportFolder,filename), config).then(() => console.log('generated '+filename));
 }
