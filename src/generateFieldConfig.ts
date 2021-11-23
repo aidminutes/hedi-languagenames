@@ -35,7 +35,7 @@ entity_type: hedi_language
 type: string
 settings:
   max_length: 255
-	is_ascii: false
+  is_ascii: false
   case_sensitive: true
 module: core
 cardinality: 1
