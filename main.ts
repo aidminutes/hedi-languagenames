@@ -1,6 +1,7 @@
 import { capitalizeTranslations } from "./src/capitalize.ts";
 import { compactData } from "./src/compactData.ts";
 import { generateFieldConfig } from "./src/generateFieldConfig.ts";
+import { generateGermanCSV } from "./src/generateGermanCSV.ts";
 
 const dataDir = "data";
 const exportDir = "export";
@@ -21,6 +22,10 @@ async function run() {
 		if ('generateFieldConfig' in input) {
 			console.log(':: running generateFieldConfig')
 			await generateFieldConfig(dataDir, exportDir, input.generateFieldConfig);
+		}
+		if ('generateGermanCSV' in input) {
+			console.log(':: running generateGermanCSV')
+			await generateGermanCSV(dataDir, exportDir);
 		}
 
 	} else {
